@@ -1,0 +1,87 @@
+# ================================
+# PYTHON BASICS
+# ================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.manifest
+*.spec
+
+# ================================
+# JUPYTER NOTEBOOKS
+# ================================
+.ipynb_checkpoints/
+*.ipynb_save
+*.nbconvert.ipynb
+.jupyter/
+
+# ================================
+# ENVIRONMENTS
+# ================================
+venv/
+.venv/
+env/
+.env/
+ENV/
+.envrc
+.conda/
+.conda_env/
+*.conda
+*.env
+*.yaml
+
+
+# ================================
+# LOGS & TEMP FILES
+# ================================
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+*.cache/
+.cache/
+__temp__/
+tmp/
+logs/
+nohup.out
+
+# ================================
+# IDEs & TOOLS
+# ================================
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# ================================
+# FLASK / FASTAPI / WEB
+# ================================
+instance/
+*.db
+*.sqlite3
+__pycache__/
+*.pid
+
+# ================================
+# TESTS
+# ================================
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+htmlcov/
