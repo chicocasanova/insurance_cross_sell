@@ -14,6 +14,9 @@ def insurance_cross_sell_predict():
     # Convert JSON payload to DataFrame
     df_original = pipeline.create_dataframe(payload)
 
+    # TESTE PARA DEBUG
+    print(">>> Columns recebidas:", list(df_original.columns))
+    
     # Predict probabilities
     proba = pipeline.predict_proba(df_original)
 
