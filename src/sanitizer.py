@@ -10,11 +10,11 @@ def sanitizer(df):
  #           df[col] = df[col].astype("Int64")
  #   return df
 
-    cols_int = ['id', 'Age', 'Driving_License',
-                'Region_Code', 'Previously_Insured',
-                'Annual_Premium', 'Policy_Sales_Channel', 'Vintage']
+    cols_int = ['id', 'age', 'driving_license', 'region_code',
+            	'previously_insured', 'annual_premium',
+            	'policy_sales_channel', 'vintage']
 
-    cols_str = ['Gender', 'Vehicle_Age', 'Vehicle_Damage']
+    cols_str = ['gender', 'vehicle_age', 'vehicle_damage']
 
     for col in cols_int:
         df[col] = pd.to_numeric(df[col], errors='coerce').round().astype('Int64')
