@@ -21,4 +21,6 @@ def sanitizer(df):
 
     for col in cols_str:
         df[col] = df[col].astype(str).str.strip()
+
+    return df
         
