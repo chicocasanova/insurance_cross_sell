@@ -1,0 +1,137 @@
+# 🛍️ Purchase Propensity Prediction
+
+Projeto de ponta à ponta de machine learning para a predição da propensão de compra de um novo produto pela base de clientes de uma empresa(cross-sell). Esse modelo ajudará a equipe comercial a identificar os clientes com maior potencial, economizando tempo e dinheiro.
+
+---
+
+## 🎯 Objective
+
+Criar uma solução que ajude a equipe comercial de uma empresa de seguros de vida, a descobrir quais clientes de sua base tem maior **propensão de compra** do novo seguro veicular que querem oferecer.
+
+Dessa maneira, o negócio pode:
+
+- Otimizar campanhas de marketing.
+- Aumentar taxas de conversão.
+- Reduzir custos atingindo a audiência correta.
+
+Além do modelo, foi criada uma API no Flask que hospedada no Render tem seu acesso através da própria planilha de clientes do funcionário, sendo uma solução de fácil adoção pela equipe.
+---
+
+## 📊 About the Dataset
+
+O dataset contém informações sobre os clientes que já adquiriram seguros dessa empresa e os produtos em si.  
+Para dar insumo ao treinamento do modelo, foi realizada uma pesquisa com toda base de clientes perguntando se estariam interessados em adquirir um seguro veicular.  
+A partir dessa informação, foi criada uma feature que servirá de label para o treinamento do modelo de ML.
+
+---
+
+## 🧾 Data Dictionary
+
+| Column Name           | Description |
+|------------------------|-------------|
+| **id**                 | Unique customer ID |
+| **gender**             | Customer gender |
+| **age**                | Customer age |
+| **region_code**        | Code representing the customer’s region |
+| **policy_sales_channel** | Code of the contact channel chosen by the customer |
+| **driving_license**    | Indicates if the customer holds a driving license (1 = Yes, 0 = No) |
+| **vehicle_age**        | Vehicle age category |
+| **vehicle_damage**     | Indicates if the vehicle has been damaged before |
+| **previously_insured** | Whether the customer already owns a car insurance policy |
+| **annual_premium**     | Annual insurance premium amount (in currency units) |
+| **vintage**            | Number of days the customer has been associated with the health insurance company |
+| **response**           | Target variable — whether the customer is interested in purchasing auto insurance (1 = Yes, 0 = No) |
+
+
+_Source:_ Comunidade DS.
+
+---
+
+## 📂 Project Structure
+```
+health_insurance_cross_sell
+├── data/ # Datasets used for model training and testing
+│ ├── api_test_data.json
+│ ├── raw.csv
+│ ├── train.csv
+│ ├── test.csv
+│ └── raw/
+│ └── train.csv
+│
+├── notebooks/ # Jupyter notebooks for data exploration and modeling
+│ ├── faacc_v1_insurance_cross_sell.ipynb
+│ └── final_pipeline.ipynb
+│
+├── src/ # Source code for data processing and model training
+│ ├── init.py
+│ ├── insurance_cross_sell.py
+│ └── sanitizer.py
+│
+├── models/ # Serialized ML models and pipelines
+│ ├── best_model_pipeline.joblib
+│ └── full_pipeline.joblib
+│
+├── results/ # Model results and evaluation files
+│ ├── Example - Real Case Scenario.gsheet
+│ └── test.csv
+│
+├── webapp/ # Web application for model serving / deployment
+│ ├── init.py
+│ ├── handler.py
+│ └── models/ # Production model/pipeline
+│ └── full_pipeline.joblib
+│
+├── requirements.txt # Python dependencies
+├── Procfile # Deployment configuration (e.g., for Heroku)
+├── .gitignore # Files and folders ignored by Git
+└── README.md # Project documentation
+```
+
+---
+
+## 🧠 Technologies
+
+- Python
+- Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, GridSearchCV
+- XGBoost
+- Flask
+- Render
+- Google Script
+
+---
+
+## 📈 Metrics and Results
+
+A métrica escolhida foi a precision@k.  
+Apesar dos modelos testados não terem alcançado valores altos devido aos dados não terem sido muito informativos, nesse caso o que importa é apenas o ranqueamento correto e, no caso, ele alcançou .
+
+Best model: Random Forest Classifier
+
+Precision at 20%: 0.3460150869137422
+Recall at 20%: 0.5646542496253479
+
+The XGBoost model achieved the best overall performance, providing a robust baseline for cross-sell prediction.
+
+---
+
+## 🔍 Business Insights
+
+- Customers with month-to-month contracts and electronic check payment methods are more likely to churn.
+- Longer tenure and automatic payment methods significantly reduce churn risk.
+- Contract and payment type were among the most important predictive features.
+
+---
+
+## 🔍 Technical Insights
+- Agrupar em faixas de valores as variáveis categóricas com muitos valores únicos, assim como as contínuas, geraram predições piores segundo a feature selection do algoritmo Random Trees.
+- Como baseline foi utilizado o Logistic Regression.
+
+---
+
+## 🧩 Conclusions and Next Steps
+
+The model successfully identified key churn drivers and predicted churn with strong performance.
+Future improvements could include:
+Hyperparameter optimization with Optuna;
+Model explainability using SHAP values;
+Deployment of an interactive dashboard using Streamlit or Flask.
