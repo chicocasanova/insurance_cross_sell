@@ -1,6 +1,6 @@
 # 🛍️ Purchase Propensity Prediction
 
-Projeto de ponta à ponta de machine learning para a predição da propensão de compra de um novo produto pela base de clientes de uma empresa(cross-sell). Esse modelo ajudará a equipe comercial a identificar os clientes com maior potencial, economizando tempo e dinheiro.
+Projeto de ponta à ponta de machine learning para a predição da propensão de compra de um novo produto pela base de clientes de uma empresa (cross-sell). Esse modelo ajudará a equipe comercial a identificar os clientes com maior potencial, economizando tempo e dinheiro.
 
 ---
 
@@ -24,7 +24,7 @@ A partir dessa informação, foi criada uma feature que servirá de label para o
 
 ---
 
-## 🧾 Data Dictionary
+### Data Dictionary
 
 | Column Name           | Description |
 |------------------------|-------------|
@@ -126,10 +126,9 @@ O **XGBoost** apresentou o melhor equilíbrio entre *Precision at k* e *Recall a
 A métrica escolhida foi a **precision at k**.
 Apesar dos modelos testados não terem alcançado valores altos devido aos dados não terem sido muito informativos, nesse caso o que importa é apenas o ranqueamento correto e, no caso, ele alcançou .
 
-Best model: XGBoost
-
-Precision at 20%: 0.3460150869137422
-Recall at 20%: 0.5646542496253479
+**Best model:** XGBoost  
+**Precision at 20%:** 0.3460150869137422  
+**Recall at 20%:** 0.5646542496253479  
 
 The XGBoost model achieved the best overall performance, providing a robust baseline for cross-sell prediction.
 
@@ -178,8 +177,10 @@ Essa solução é facilmente integrável via planilha do Google Sheets, tornando
 
 ## 🧩 Conclusions and Next Steps
 
-O modelo se provou drasticamente eficiente em comparação com o método atualmente usado.
-Possíveis futuras melhorias:
+O modelo se provou drasticamente eficiente em comparação com o método atualmente usado.  
+A solução será de fácil adoção pela equipe comercial pois foi inserida de maneira natural dentro do seu workflow.  
+  
+Possíveis melhorias futuras:
 - Captação de mais dados dos clientes para criação de features mais relevantes.
 - Melhor doumentação de algumas features, que não puderam ser muito bem interpretadas.
 - Utilização do SHAP para melhor explicabilidade do modelo.
