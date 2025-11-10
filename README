@@ -6,15 +6,14 @@ Projeto de ponta à ponta de machine learning para a predição da propensão de
 
 ## 🎯 Objective
 
-Criar uma solução que ajude a equipe comercial de uma empresa de seguros de vida, a descobrir quais clientes de sua base tem maior **propensão de compra** do novo seguro veicular que querem oferecer.
-
-Dessa maneira, o negócio pode:
+Criar uma solução que ajude a equipe comercial de uma empresa de seguros de vida, a descobrir quais clientes de sua base tem maior **propensão de compra** do novo seguro veicular que querem oferecer. Dessa maneira, o negócio pode:
 
 - Otimizar campanhas de marketing.
 - Aumentar taxas de conversão.
 - Reduzir custos atingindo a audiência correta.
 
-Além do modelo, foi criada uma API no Flask que hospedada no Render tem seu acesso através da própria planilha de clientes do funcionário, sendo uma solução de fácil adoção pela equipe.
+Além do modelo, criei uma API (Flask) que hospedada (Render) tem seu acesso através da própria planilha de clientes do funcionário (Google Sheets), sendo assim uma solução de fácil adoção pela equipe comercial.
+
 ---
 
 ## 📊 About the Dataset
@@ -54,9 +53,7 @@ health_insurance_cross_sell
 │ ├── api_test_data.json
 │ ├── raw.csv
 │ ├── train.csv
-│ ├── test.csv
-│ └── raw/
-│ └── train.csv
+│ └── test.csv
 │
 ├── notebooks/ # Jupyter notebooks for data exploration and modeling
 │ ├── faacc_v1_insurance_cross_sell.ipynb
@@ -79,7 +76,7 @@ health_insurance_cross_sell
 │ ├── init.py
 │ ├── handler.py
 │ └── models/ # Production model/pipeline
-│ └── full_pipeline.joblib
+│   └── full_pipeline.joblib
 │
 ├── requirements.txt # Python dependencies
 ├── Procfile # Deployment configuration (e.g., for Heroku)
@@ -100,21 +97,60 @@ health_insurance_cross_sell
 
 ---
 
+## 🧩 Feature Engineering
+
+Durante o processo de modelagem, foram criadas e transformadas variáveis para melhorar o poder preditivo do modelo, como:
+
+- **vehicle_age_encoded:** transformação ordinal da idade do veículo.
+- **region_code_freq:** codificação de frequência para representar a popularidade de uma região.
+- **interaction_features:** interações entre variáveis de risco e histórico de seguro.
+
+Essas transformações foram aplicadas dentro do pipeline do Scikit-learn para garantir consistência durante o deploy.
+
+---
+
+## 🤖 Model Selection
+
+Foram testados diferentes algoritmos de classificação:
+
+- Logistic Regression
+- Random Forest
+- XGBoost
+
+O **XGBoost** apresentou o melhor equilíbrio entre *Precision at k* e *Recall at k*, além de melhor performance em dados desbalanceados.
+
+---
+
 ## 📈 Metrics and Results
 
-A métrica escolhida foi a precision@k.  
+A métrica escolhida foi a **precision at k**.
 Apesar dos modelos testados não terem alcançado valores altos devido aos dados não terem sido muito informativos, nesse caso o que importa é apenas o ranqueamento correto e, no caso, ele alcançou .
 
-Best model: Random Forest Classifier
+Best model: XGBoost
 
 Precision at 20%: 0.3460150869137422
 Recall at 20%: 0.5646542496253479
 
 The XGBoost model achieved the best overall performance, providing a robust baseline for cross-sell prediction.
 
+### Lift Curve
+<img src="results/lift_curve.png" alt="Lift Curve" width="500"/>  
+
+A Curva de Lift indica que o modelo é aproximadamente **2,8 vezes mais eficaz** em identificar clientes potenciais nos **20% superiores da base** (ordenada pela probabilidade prevista) do que um modelo aleatório.
+
+### Cumulative Gain Curve
+<img src="results/cumulative_gain_curve.png" alt="Cumulative Gain Curve" width="500"/>  
+
+A Curva de Ganho Acumulado mostra que, ao contatar apenas **20% dos clientes mais bem classificados pelo modelo**, conseguimos alcançar cerca de **60% dos potenciais clientes reais**. Um modelo aleatório, por outro lado, capturaria apenas cerca de **20%** no mesmo ponto.
+
+### ROI X Baseline Random Model
+<img src="results/roi.png" alt="ROI X Baseline Random Model" width="750"/>  
+
+A Curva de ROI mostra que o modelo gera um retorno sobre investimento **muito superior** ao do modelo aleatório, especialmente nos primeiros percentis da base (clientes mais prováveis). No início, o ROI do modelo é **mais de 200% maior** que o baseline, demonstrando alto ganho econômico quando o investimento é direcionado aos clientes mais bem classificados.
+
 ---
 
-## 🔍 Business Insights
+## 🔍 Insights
 
 - Customers with month-to-month contracts and electronic check payment methods are more likely to churn.
 - Longer tenure and automatic payment methods significantly reduce churn risk.
@@ -122,16 +158,29 @@ The XGBoost model achieved the best overall performance, providing a robust base
 
 ---
 
-## 🔍 Technical Insights
-- Agrupar em faixas de valores as variáveis categóricas com muitos valores únicos, assim como as contínuas, geraram predições piores segundo a feature selection do algoritmo Random Trees.
-- Como baseline foi utilizado o Logistic Regression.
+## 💼 Business Impact
+
+O modelo desenvolvido permite que a equipe comercial priorize os **20% de clientes com maior propensão**, resultando em:
+
+- **2.8x mais eficiência** na identificação de clientes potenciais (vs. abordagem aleatória);
+- **60% dos clientes interessados** alcançados ao contatar apenas **20% da base**;
+- Um **ROI superior a 200%** nos primeiros percentis, demonstrando forte impacto financeiro.
+
+Essa solução é facilmente integrável via planilha do Google Sheets, tornando a adoção imediata e acessível para o time comercial.
+
+---
+
+## 🧩 Google Sheets Integration
+
+<img src="results/real_case_scenario.jpg" alt="Real Case Scenario" width="1000"/>  
 
 ---
 
 ## 🧩 Conclusions and Next Steps
 
-The model successfully identified key churn drivers and predicted churn with strong performance.
-Future improvements could include:
-Hyperparameter optimization with Optuna;
-Model explainability using SHAP values;
-Deployment of an interactive dashboard using Streamlit or Flask.
+O modelo se provou drasticamente eficiente em comparação com o método atualmente usado.
+Possíveis futuras melhorias:
+- Captação de mais dados dos clientes para criação de features mais relevantes.
+- Melhor doumentação de algumas features, que não puderam ser muito bem interpretadas.
+- Utilização do SHAP para melhor explicabilidade do modelo.
+- Implementação de alguma ferramenta de orquestração para que o modelo tenha boa performance no mundo real.
