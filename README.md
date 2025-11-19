@@ -3,13 +3,13 @@
 ![XGBoost](https://img.shields.io/badge/Model-XGBoost-orange)
 ![Deploy](https://img.shields.io/badge/Render-Cloud-blue)
 
-# 🛍️ Cross-Sell Propensity Prediction (Learn to Rank)
+# 🛍️ Predição de Propensão de Compra (Learn to Rank)
 
 Projeto de ponta à ponta de machine learning para a predição da propensão de compra de um novo produto pela base de clientes de uma seguradora (cross-sell). Esse modelo ajudará a equipe comercial a identificar os clientes com maior potencial, economizando tempo e dinheiro.
 
 ---
 
-## 🧠 Technologies
+## 🧠 Tecnologias
 
 - **Language:** Python  
 - **Data Processing & Analysis:** Pandas, NumPy  
@@ -20,7 +20,7 @@ Projeto de ponta à ponta de machine learning para a predição da propensão de
 
 ---
 
-## 🎯 Objective
+## 🎯 Objetivo
 
 Criar uma solução que ajude a equipe comercial de uma empresa de seguros de vida a descobrir quais clientes de sua base tem maior **propensão de compra** do novo seguro veicular que querem oferecer. Dessa maneira, o negócio pode:
 
@@ -32,12 +32,12 @@ Além do modelo, criei uma API (Flask) que hospedada (Render) tem seu acesso atr
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Arquitetura da Solução
 <img src="results/workflow.png" alt="Lift Curve" width="1000"/>  
 
 ---
 
-## 📊 About the Dataset
+## 📊 Sobre o Dataset
 
 O dataset contém informações sobre os clientes que já adquiriram seguros dessa empresa e os produtos em si.  
 Para dar insumo ao treinamento do modelo, foi realizada uma pesquisa com toda base de clientes perguntando se estariam interessados em adquirir um seguro veicular.  
@@ -47,25 +47,25 @@ A partir dessa informação, foi criada uma feature que servirá de label para o
 
 | Column Name              | Description |
 |--------------------------|-------------|
-| **id**                   | Unique customer ID |
-| **gender**               | Customer gender |
-| **age**                  | Customer age |
-| **region_code**          | Code representing the customer’s region |
-| **policy_sales_channel** | Code of the contact channel chosen by the customer |
-| **driving_license**      | Indicates if the customer holds a driving license (1 = Yes, 0 = No) |
-| **vehicle_age**          | Vehicle age category |
-| **vehicle_damage**       | Indicates if the vehicle has been damaged before |
-| **previously_insured**   | Whether the customer already owns a car insurance policy |
-| **annual_premium**       | Annual insurance premium amount (in currency units) |
-| **vintage**              | Number of days the customer has been associated with the health insurance company |
-| **response**             | Target variable — whether the customer is interested in purchasing auto insurance (1 = Yes, 0 = No) |
+| **id**                   | ID único do cliente |
+| **gender**               | Gênero do cliente |
+| **age**                  | Idade do cliente |
+| **region_code**          | Código representando a região do cliente |
+| **policy_sales_channel** | Código do canal de contato escolhido pelo cliente |
+| **driving_license**      | Indica se o cliente tem ou não carteira de motorista (1 = Sim, 0 = Não) |
+| **vehicle_age**          | Categoria de idade do veículo |
+| **vehicle_damage**       | Indica se o veículo já sofreu algum dano anteriormente |
+| **previously_insured**   | Indica se o cliente já tem seguro veicular |
+| **annual_premium**       | Prêmio anual do seguro (a moeda não é descrita) |
+| **vintage**              | Número de dias que o cliente é consumidor da seguradora |
+| **response**             | Variável alvo - Se está ou não interessado em adquirir um seguro de carro com a seguradora (1 = Sim, 0 = Não) |
 
 
 _Source:_ Comunidade DS.
 
 ---
 
-## 📂 Project Structure
+## 📂 Estrutura do Projeto
 ```
 health_insurance_cross_sell
 ├── data/ # Datasets used for model training and testing
@@ -105,12 +105,12 @@ health_insurance_cross_sell
 
 ---
 
-## 🔬 Exploratory Data Analysis (EDA)
+## 🔬 Análise exploratória (EDA)
 
 
 ---
 
-## 🔧 Feature Engineering
+## 🔧 Engenharia de Dados
 
 - **is_annual_premium_2630:** foi descoberto que existia uma enorme concentração enorme de observações com o valor de 2630, o que não acontecia com nenhum outro valor, causando um pico anômalo na distribuição mesmo após a aplicação de uma transformação logarítmica (log1p). Para ajudar os algoritmos que poderiam sofrer com isso, foi criada uma nova feature categórica criando um flag para esse valor.
 - **is_annual_premium:** após tentar distribuir as observações com o valor dominante citado acima no entorno da mediana da feature (inserindo algum noise para não simplesmene transferir o pico) ainda assim a feature tinha a característica de sua distribuição muito alterada dado que a contagem de observações era esmagadora, então preferi deixar ela como estava e apenas aplicar a função logarítmica para normalizar.
@@ -130,7 +130,7 @@ Essas transformações foram aplicadas dentro do pipeline do Scikit-learn para g
 
 ---
 
-## 🤖 Model Selection
+## 🤖 Seleção de modelo
 
 Foram testados diferentes algoritmos de classificação:
 
@@ -143,11 +143,11 @@ O **XGBoost** apresentou o melhor equilíbrio entre *Precision at k* e *Recall a
 
 ---
 
-## 📈 Metrics and Results
+## 📈 Métricas e Resultados
 
 A principal métrica escolhida foi a **Precision at k**, dado que o principal critério era encontrar numa amostragem de 20% da base ordenada, um alto número de clientes com label positiva.
 
-**Best model:** XGBoost  
+**melhor modelo:** XGBoost  
   
 **Precision at 20%:** 0.3460150869137422  
 **Recall at 20%:** 0.5646542496253479  
@@ -172,10 +172,6 @@ A Curva de ROI mostra que o modelo gera um retorno sobre investimento **muito su
 
 ## 🔍 Insights
 
-- Customers with month-to-month contracts and electronic check payment methods are more likely to churn.
-- Longer tenure and automatic payment methods significantly reduce churn risk.
-- Contract and payment type were among the most important predictive features.
-
 ---
 
 ## 💼 Business Impact
@@ -196,7 +192,7 @@ Essa solução é facilmente integrável via planilha do Google Sheets, tornando
 
 ---
 
-## 🧩 Conclusions and Next Steps
+## 🧩 Conclusoes e Próximos Passos
 
 O modelo se provou drasticamente eficiente em comparação com o método atualmente usado.  
 A solução será de fácil adoção pela equipe comercial pois foi inserida de maneira natural dentro do seu workflow.  
